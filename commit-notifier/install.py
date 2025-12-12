@@ -61,7 +61,7 @@ def compile_resources() :
         
 
 def create_cronjob(user , repo):
-    cron_line = f"\n*/1 * * * * /usr/local/bin/notifier {user} {repo} \n"
+    cron_line = f"*/1 * * * * /usr/local/bin/notifier {user} {repo} >> /var/log/notifier.log 2>&1 \n"
     result = subprocess.run(["crontab", "-l"], capture_output=True, text=True)
     existing_cron = result.stdout
     if cron_line.strip() in existing_cron :
