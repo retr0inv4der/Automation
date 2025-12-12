@@ -1,4 +1,4 @@
-
+import notify2
 import json
 from pathlib import Path
 import requests
@@ -36,6 +36,13 @@ def check_for_updates(new_data, old_data):
         return True
     return False
 
+
+def send_notification(title, message):
+    notify2.init("Commit Notifier")
+    n = notify2.Notification(title, message)
+    n.set_urgency(notify2.URGENCY_NORMAL)
+    n.set_icon_from_pixbuf("github-logo.png")
+    n.show()
 if __name__ == "__main__":
     username = "retr0inv4der"
     repo = "Automation"
