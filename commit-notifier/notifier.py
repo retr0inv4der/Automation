@@ -41,7 +41,7 @@ def send_notification(title, message):
     notify2.init("Commit Notifier")
     n = notify2.Notification(title, message)
     n.set_urgency(notify2.URGENCY_NORMAL)
-    n.set_icon_from_pixbuf("github-logo.png")
+    n.set_icon_from_pixbuf("git")
     n.show()
 if __name__ == "__main__":
     username = "retr0inv4der"
