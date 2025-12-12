@@ -32,7 +32,8 @@ def compile_resources() :
     target_path = Path("/usr/local/bin/notifier")
     print(f"copying compiled binary to: {target_path}")
     run(["sudo","cp", str(dist_dir / "notifier"), str(target_path)])
-    
+    #sudo chmod +x /usr/local/bin/notifier
+    run(["sudo","chmod", "+x", str(target_path)])
     
     print("cleaning up build artifacts...")
     
