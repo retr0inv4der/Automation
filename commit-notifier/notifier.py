@@ -54,7 +54,7 @@ if __name__ == "__main__":
     if check_for_updates(data, old_data):
         print("Update detected!")
         save_to_file(data)
-        send_notification("New Commit Detected", f"New commit SHA: {data['sha']}")
+        send_notification("Commit Detected", f"New commit SHA: {data['sha']}")
     else:
         print("No update detected.")
     
