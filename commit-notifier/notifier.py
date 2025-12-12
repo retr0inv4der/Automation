@@ -2,7 +2,7 @@ import notify2
 import json
 from pathlib import Path
 import requests
-
+import sys
 
 def fetch_data(username , repo):
     response = requests.get(f"https://api.github.com/repos/{username}/{repo}/commits")
@@ -44,8 +44,8 @@ def send_notification(title, message):
     
     n.show()
 if __name__ == "__main__":
-    username = "retr0inv4der"
-    repo = "Automation"
+    username = sys.argv[1]
+    repo = sys.argv[2]
     
     data = {"sha" : fetch_data(username, repo)[0]["sha"]}
     

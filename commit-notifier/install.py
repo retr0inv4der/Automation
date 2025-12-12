@@ -59,13 +59,28 @@ def compile_resources() :
         print(f"Removing virtual environment directory: {VENV_DIR}")
         subprocess.run(["rm", "-rf", str(VENV_DIR)], check=True)
         
-        
+
+def create_cronjob(user , repo):
+    cron_line = f"\n*/1 * * * * /usr/local/bin/notifier {user} {repo} \n"
+    result = subprocess.run(["crontab", "-l"], capture_output=True, text=True)
+    existing_cron = result.stdout
+    if cron_line.strip() in existing_cron :
+        print("Cron job already exists. Skipping addition.")
+        return
+    new_cron = existing_cron + cron_line
+    subprocess.run(["crontab", "-"], input=new_cron, text=True)
+    
+    
 def main() :
+    if sys.argv.__len__() != 3 :
+        print("Usage: python install.py <github-username> <repository-name>")
+        sys.exit(1)
     create_venv()
     install_dependencies()
     compile_resources()
-    
     print("installation and compilation complete.")
+    create_cronjob(sys.argv[1] , sys.argv[2])
+    print("cron job created/verified.")
     
 if __name__ == "__main__" :
     main()
