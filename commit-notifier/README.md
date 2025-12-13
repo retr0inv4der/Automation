@@ -109,7 +109,7 @@ Remove the cron job
 
 Delete /usr/local/bin/notifier
 
-Known Limitations
+## Known Limitations
 No GitHub authentication (rate limits apply)
 
 Assumes a graphical session is available
