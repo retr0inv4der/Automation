@@ -33,10 +33,7 @@ def compile_resources() :
     print(f"copying compiled binary to: {target_path}")
     run(["sudo","cp", str(dist_dir / "notifier"), str(target_path)])
     #sudo chmod +x /usr/local/bin/notifier
-    run(["sudo","chmod", "+x", str(target_path)])
-    
-    print("cleaning up build artifacts...")
-    
+    #run(["chmod", "+x", str(target_path)])
     #remove build directory
     build_dir = PROJECT_DIR / "build"
     if build_dir.exists() and build_dir.is_dir() :
@@ -62,7 +59,11 @@ def compile_resources() :
         
 
 def create_cronjob(user , repo):
-    cron_line = f"*/1 * * * * /usr/local/bin/notifier {user} {repo} >> /var/log/notifier.log 2>&1 \n"
+    #make sure cron service is running
+    print("Ensuring cron service is running...")
+    subprocess.run(["sudo", "systemctl" , "enable" , "--now" , "cronie"], check=True)
+    
+    cron_line = f"*/1 * * * * /usr/local/bin/notifier {user} {repo} >> /home/retr0/mew.txt  \n"
     result = subprocess.run(["crontab", "-l"], capture_output=True, text=True)
     existing_cron = result.stdout
     if cron_line.strip() in existing_cron :
