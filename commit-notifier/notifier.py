@@ -12,14 +12,14 @@ def fetch_data(username , repo):
     else:
         return {"error": "Failed to fetch data" , "status_code": response.status_code}
 
-def save_to_file(data, pathto="/tmp/commits.json"):
+def save_to_file(data, pathto=f"/tmp/{sys.argv[2]}.json"):
     try:
         STATE_FILE = Path(pathto)
         STATE_FILE.write_text(json.dumps(data, indent=4))
     except Exception as e:
         print(f"Error saving to file: {e}")
 
-def load_from_file(pathto="/tmp/commits.json"):
+def load_from_file(pathto=f"/tmp/{sys.argv[2]}.json"):
     try:
         STATE_FILE = Path(pathto)
         if STATE_FILE.exists():
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     if check_for_updates(data, old_data):
         print("Update detected!")
         save_to_file(data)
-        send_notification("Commit Detected", f"New commit SHA: {data['sha']}")
+        send_notification("Commit Detected", f"New commit on {sys.argv[2]} SHA: {data['sha']}")
     else:
         print("No update detected.")
     
